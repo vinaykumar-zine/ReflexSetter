@@ -1,5 +1,26 @@
 let timer = 1;
 let x = 0;
+let gameRunning = false;
+let gameInterval;
+
+function toggleGame() {
+  const startButton = document.getElementById("startButton");
+
+  if (gameRunning) {
+    
+    clearInterval(gameInterval);
+    startButton.textContent = "Start";
+    x = 0;
+    updateScore();
+    timer = 1;
+  } else {
+   
+    gameInterval = setInterval(randsomPlace, 1300);
+    startButton.textContent = "Stop";
+  }
+
+  gameRunning = !gameRunning;
+}
 
 function randsomPlace() {
   const target = document.getElementById("target");
@@ -21,8 +42,6 @@ function randsomPlace() {
 
     target.style.left = randomX + "px";
     target.style.top = randomY + "px";
-
-    setTimeout(randsomPlace, 1300);
   } else {
     updateScore();
   }
@@ -34,11 +53,6 @@ function scoreCnt() {
 }
 
 function updateScore() {
-  if (timer <= 50) {
-    const scoreElement = document.getElementById("show");
-    scoreElement.innerHTML = "score: " + x;
-  } else {
-    const scoreElement = document.getElementById("show");
-    scoreElement.innerHTML = "score: 0";
-  }
+  const scoreElement = document.getElementById("show");
+  scoreElement.innerHTML = "Score: " + x;
 }
